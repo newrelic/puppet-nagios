@@ -17,14 +17,15 @@
 # Copyright 2013 New Relic, Inc. All rights reserved.
 #
 class nagios::nagios_cfg (
-  $cfg_files                    = $nagios::params::cfg_files,
+  $base_dir                     = $nagios::params::base_dir,
   $cfg_dirs                     = $nagios::params::cfg_dirs,
+  $cfg_files                    = $nagios::params::cfg_files,
   $command_check_interval       = $nagios::params::cfg_command_check_interval,
   $use_retained_scheduling_info = $nagios::params::cfg_use_retained_scheduling_info,
   $enable_flap_detection        = $nagios::params::cfg_enable_flap_detection,
 ) inherits nagios::params {
 
-  file { '/etc/nagios/nagios.cfg':
+  file { "${base_dir}/nagios.cfg":
     ensure  => present,
     owner   => 'root',
     group   => 'root',

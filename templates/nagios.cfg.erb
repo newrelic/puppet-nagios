@@ -27,21 +27,24 @@ log_file=/var/log/nagios/nagios.log
 # if you wish (as shown below), or keep them all in a single config file.
 
 # You can specify individual object config files as shown below:
-<% if @cfg_files.count > 0 %>
-<% @cfg_files.each do |file| %>
+<% if @cfg_files.count > 0 -%>
+<%   @cfg_files.each do |file| -%>
 cfg_file=<%= file %>
-<% end %>
-<% end %>
+<%   end -%>
+<% end -%>
+
+
 
 # You can also tell Nagios to process all config files (with a .cfg
 # extension) in a particular directory by using the cfg_dir
 # directive as shown below:
-
-<% if @cfg_dirs.count > 0 %>
-<% @cfg_dirs.each do |dir| %>
+<% if @cfg_dirs.count > 0 -%>
+<%   @cfg_dirs.each do |dir| -%>
 cfg_dir=<%= dir %>
-<% end %> 
-<% end %>
+<%   end -%>
+<% end -%>
+
+
 
 # OBJECT CACHE FILE
 # This option determines where object definitions are cached when
