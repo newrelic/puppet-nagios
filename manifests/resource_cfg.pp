@@ -18,7 +18,7 @@
 #
 class nagios::resource_cfg(
   $resource_user = { },
-  $resource_file = "${nagios::params::base_dir}/private/resource.cfg",
+  $resource_file = $nagios::params::resource_file,
 ) inherits nagios::params {
 
   # This template uses: $resource_user

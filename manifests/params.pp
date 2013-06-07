@@ -15,6 +15,14 @@
 # Copyright 2013 New Relic, Inc. All rights reserved.
 #
 class nagios::params {
+  # Packages
+  $packages_core        = ['nagios', 'nagios-common']
+  $packages_plugins     = ['nagios-plugins-all']
+  $package_dependencies = ['perl-Net-SNMP']
+
+  $link_lib64            = true   # Link /usr/lib/nagios => /usr/lib64/nagios
+  $purge_default_objects = true   # Delete /etc/nagios/objects
+
   # NAGIOS.CFG PARAMS
   $base_dir = '/etc/nagios'
 
@@ -35,11 +43,13 @@ class nagios::params {
     "${base_dir}/nagios_contact.cfg",
     "${base_dir}/nagios_contactgroup.cfg",
   ]
+  $resource_file = "${base_dir}/private/resource.cfg"
 
   $cfg_dirs                           = [ ]
   $cfg_command_check_interval         = '-1'
   $cfg_use_retained_scheduling_info   = '1'
   $cfg_enable_flap_detection          = '0'
+
 
   # CGI PARAMS
   $cgi_authorized_for_system_information          = 'nagiosadmin'

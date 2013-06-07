@@ -11,50 +11,35 @@
 # Copyright 2013 New Relic, Inc. All rights reserved.
 #
 class nagios (
-  $cfg_files                                      = $nagios::params::cfg_files,
-  $cfg_dirs                                       = $nagios::params::cfg_dirs,
-  $cfg_command_check_interval                     = $nagios::params::cfg_command_check_interval,
-  $cfg_use_retained_scheduling_info               = $nagios::params::cfg_use_retained_scheduling_info,
-  $cfg_enable_flap_detection                      = $nagios::params::cfg_enable_flap_detection,
-  $cgi_authorized_for_system_information          = $nagios::params::cgi_authorized_for_system_information,
-  $cgi_authorized_for_configuration_information   = $nagios::params::cgi_authorized_for_configuration_information,
-  $cgi_authorized_for_system_commands             = $nagios::params::cgi_authorized_for_system_commands,
-  $cgi_authorized_for_all_services                = $nagios::params::cgi_authorized_for_all_services,
-  $cgi_authorized_for_all_hosts                   = $nagios::params::cgi_authorized_for_all_hosts,
-  $cgi_authorized_for_all_service_commands        = $nagios::params::cgi_authorized_for_all_service_commands,
-  $cgi_authorized_for_all_host_commands           = $nagios::params::cgi_authorized_for_all_host_commands,
-  $resource_user                                  = { },
+  $base_dir                                     = $nagios::params::base_dir,
+  $cfg_files                                    = $nagios::params::cfg_files,
+  $cfg_dirs                                     = $nagios::params::cfg_dirs,
+  $cfg_command_check_interval                   = $nagios::params::cfg_command_check_interval,
+  $cfg_use_retained_scheduling_info             = $nagios::params::cfg_use_retained_scheduling_info,
+  $cfg_enable_flap_detection                    = $nagios::params::cfg_enable_flap_detection,
+  $cgi_authorized_for_system_information        = $nagios::params::cgi_authorized_for_system_information,
+  $cgi_authorized_for_configuration_information = $nagios::params::cgi_authorized_for_configuration_information,
+  $cgi_authorized_for_system_commands           = $nagios::params::cgi_authorized_for_system_commands,
+  $cgi_authorized_for_all_services              = $nagios::params::cgi_authorized_for_all_services,
+  $cgi_authorized_for_all_hosts                 = $nagios::params::cgi_authorized_for_all_hosts,
+  $cgi_authorized_for_all_service_commands      = $nagios::params::cgi_authorized_for_all_service_commands,
+  $cgi_authorized_for_all_host_commands         = $nagios::params::cgi_authorized_for_all_host_commands,
+  $resource_user                                = { },
+  $packages_core                                = $nagios::params::packages_core,
+  $packages_plugins                             = $nagios::params::packages_plugins,
+  $dependencies                                 = $nagios::params::package_dependencies,
+  $link_lib64                                   = $nagios::params::link_lib64,
+  $purge_objects                                = $nagios::params::purge_default_objects,
 ) inherits nagios::params {
 
-  package {
-    'nagios':
-      ensure  => installed,
-  } -> package {
-    'nagios-common':
-      ensure  => installed,
-  } -> package {
-    'nagios-plugins-all':
-      ensure  => installed,
+  class { 'nagios::packages':
+    packages_core    => $nagios::params::packages_core,
+    packages_plugins => $nagios::params::packages_plugins,
+    dependencies     => $nagios::params::package_dependencies,
+    link_lib64       => $nagios::params::link_lib64,
+    purge_objects    => $nagios::params::purge_default_objects,
+    base_dir         => $nagios::params::base_dir,
   }
-
-  package { 'perl-Net-SNMP':
-    ensure => installed,
-  }
-
-  # Nuke the default objects dir in CentOS 6
-  file { '/etc/nagios/objects/':
-    ensure  => absent,
-    force   => true,
-    require => Package['nagios'],
-  }
-
-  # link lib64 plugins to lib so the pathing works right
-  file { '/usr/lib/nagios/':
-    ensure  => link,
-    target  => '/usr/lib64/nagios/',
-    require => Package['nagios-plugins-all'],
-  }
-
 
   class { 'nagios::cgi_cfg':
     authorized_for_configuration_information => $cgi_authorized_for_configuration_information,
@@ -63,7 +48,7 @@ class nagios (
     authorized_for_all_hosts                 => $cgi_authorized_for_all_hosts,
     authorized_for_all_service_commands      => $cgi_authorized_for_all_service_commands,
     authorized_for_all_host_commands         => $cgi_authorized_for_all_host_commands,
-    require                                  => Package['nagios'],
+    require                                  => Class['nagios::packages'],
   }
 
   class { 'nagios::nagios_cfg':
@@ -72,12 +57,13 @@ class nagios (
     command_check_interval       => $cfg_command_check_interval,
     use_retained_scheduling_info => $cfg_use_retained_scheduling_info,
     enable_flap_detection        => $cfg_enable_flap_detection,
-    require                      => Package['nagios'],
+    require                      => Class['nagios::packages'],
   }
 
   class { 'nagios::resource_cfg':
     resource_user => $resource_user,
-    require       => Package['nagios'],
+    require       => Class['nagios::packages'],
   }
+
 }
 
