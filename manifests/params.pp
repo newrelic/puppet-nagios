@@ -20,8 +20,15 @@ class nagios::params {
   $packages_plugins     = ['nagios-plugins-all']
   $package_dependencies = ['perl-Net-SNMP']
 
+  $user  = 'root'
+  $group = 'root'
+
   $link_lib64            = true   # Link /usr/lib/nagios => /usr/lib64/nagios
   $purge_default_objects = true   # Delete /etc/nagios/objects
+
+  $puppet_resources_collect = true  # Auto-collect all of the exported puppet resources
+  $puppet_resources_purge   = true  # Auto-purge resources that are no longer exported
+
 
   # NAGIOS.CFG PARAMS
   $base_dir = '/etc/nagios'
@@ -43,9 +50,11 @@ class nagios::params {
     "${base_dir}/nagios_contact.cfg",
     "${base_dir}/nagios_contactgroup.cfg",
   ]
+  $cfg_dirs = [
+    "${base_dir}/conf.d",
+  ]
   $resource_file = "${base_dir}/private/resource.cfg"
 
-  $cfg_dirs                           = [ ]
   $cfg_command_check_interval         = '-1'
   $cfg_use_retained_scheduling_info   = '1'
   $cfg_enable_flap_detection          = '0'

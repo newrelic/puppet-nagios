@@ -30,6 +30,8 @@ class nagios (
   $dependencies                                 = $nagios::params::package_dependencies,
   $link_lib64                                   = $nagios::params::link_lib64,
   $purge_objects                                = $nagios::params::purge_default_objects,
+  $puppet_resources_collect                     = $nagios::params::puppet_resources_collect,
+  $puppet_resources_purge                       = $nagios::params::puppet_resources_purge,
 ) inherits nagios::params {
 
   class { 'nagios::packages':
@@ -65,5 +67,11 @@ class nagios (
     require       => Class['nagios::packages'],
   }
 
+  class { 'nagios::puppet_resources':
+    auto_collect => $puppet_resources_collect,
+    auto_purge   => $puppet_resources_purge,
+    base_dir     => $base_dir,
+    require      => Class['nagios::packages'],
+  }
 }
 
