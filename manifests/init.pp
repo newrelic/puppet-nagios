@@ -32,6 +32,7 @@ class nagios (
   $purge_objects                                = $nagios::params::purge_default_objects,
   $puppet_resources_collect                     = $nagios::params::puppet_resources_collect,
   $puppet_resources_purge                       = $nagios::params::puppet_resources_purge,
+  $service_control                              = $nagios::params::service_control,
 ) inherits nagios::params {
 
   class { 'nagios::packages':
@@ -73,5 +74,12 @@ class nagios (
     base_dir     => $base_dir,
     require      => Class['nagios::packages'],
   }
+
+  if ($service_control) {
+    class { 'nagios::service':
+      require => Class['nagios::nagios_cfg'],
+    }
+  }
+
 }
 

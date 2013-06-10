@@ -29,6 +29,14 @@ class nagios::params {
   $puppet_resources_collect = true  # Auto-collect all of the exported puppet resources
   $puppet_resources_purge   = true  # Auto-purge resources that are no longer exported
 
+  # Service handling
+  $service_control    = false  # Enable service management
+  $service_enable     = true
+  $service_ensure     = true
+  $service_hasrestart = true
+  $service_hasstatus  = true
+  $service_notify     = false  # Notify the service of config file changes
+
 
   # NAGIOS.CFG PARAMS
   $base_dir = '/etc/nagios'
