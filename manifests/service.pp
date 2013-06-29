@@ -18,8 +18,8 @@ class nagios::service (
 ) inherits nagios::params {
 
   service { 'nagios':
-    enable     => $service_enable,
     ensure     => $service_ensure,
+    enable     => $service_enable,
     hasrestart => $service_hasrestart,
     hasstatus  => $service_hasstatus,
     require    => Class['nagios::packages'],
