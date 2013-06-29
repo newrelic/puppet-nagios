@@ -4,6 +4,9 @@
 #
 # [*auto_collect*] - Enable automatic collection of exported resources to create the configs
 # [*auto_purge*]   - Enable the automatic purging of resources that are no longer exported
+# [*base_dir*]     - Base directory to store the nagios config files
+# [*nagios_user*]  - User that should own the nagios config files
+# [*nagios_group*] - Group that should own the nagios config files
 #
 # === Examples
 #
@@ -73,20 +76,20 @@ class nagios::puppet_resources (
 
   if ($auto_collect) {
     # collect resources and populate /etc/nagios/nagios_*.cfg
-    Nagios_host <<||>>
-    Nagios_hostgroup <<||>>
-    Nagios_hostdependency <<||>>
-    Nagios_hostescalation <<||>>
-    Nagios_hostextinfo <<||>>
-    Nagios_service <<||>>
-    Nagios_servicegroup <<||>>
-    Nagios_servicedependency <<||>>
-    Nagios_serviceescalation <<||>>
-    Nagios_serviceextinfo <<||>>
-    Nagios_timeperiod <<||>>
     Nagios_command <<||>>
     Nagios_contact <<||>>
     Nagios_contactgroup <<||>>
+    Nagios_host <<||>>
+    Nagios_hostdependency <<||>>
+    Nagios_hostescalation <<||>>
+    Nagios_hostextinfo <<||>>
+    Nagios_hostgroup <<||>>
+    Nagios_service <<||>>
+    Nagios_servicedependency <<||>>
+    Nagios_serviceescalation <<||>>
+    Nagios_serviceextinfo <<||>>
+    Nagios_servicegroup <<||>>
+    Nagios_timeperiod <<||>>
   }
 
 }
