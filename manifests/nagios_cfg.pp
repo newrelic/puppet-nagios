@@ -23,6 +23,8 @@ class nagios::nagios_cfg (
   $command_check_interval       = $nagios::params::cfg_command_check_interval,
   $use_retained_scheduling_info = $nagios::params::cfg_use_retained_scheduling_info,
   $enable_flap_detection        = $nagios::params::cfg_enable_flap_detection,
+  $global_host_event_handler    = $nagios::params::cfg_global_host_event_handler,
+  $global_service_event_handler = $nagios::params::cfg_global_service_event_handler
 ) inherits nagios::params {
 
   file { "${base_dir}/nagios.cfg":

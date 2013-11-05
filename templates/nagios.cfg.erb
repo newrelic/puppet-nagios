@@ -328,8 +328,6 @@ log_external_commands=1
 
 log_passive_checks=1
 
-
-
 # GLOBAL HOST AND SERVICE EVENT HANDLERS
 # These options allow you to specify a host and service event handler
 # command that is to be run for every host or service state change.
@@ -339,10 +337,12 @@ log_passive_checks=1
 # command definition that you define in your host configuration file.
 # Read the HTML docs for more information.
 
-#global_host_event_handler=somecommand
-#global_service_event_handler=somecommand
-
-
+<% if @global_host_event_handler %>
+global_host_event_handler=<%= @global_host_event_handler %>
+<% end -%>
+<% if @global_service_event_handler -%>
+global_service_event_handler=<%= @global_service_event_handler %>
+<% end %>
 
 # SERVICE INTER-CHECK DELAY METHOD
 # This is the method that Nagios should use when initially

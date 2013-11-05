@@ -66,7 +66,8 @@ class nagios::params {
   $cfg_command_check_interval         = '-1'
   $cfg_use_retained_scheduling_info   = '1'
   $cfg_enable_flap_detection          = '0'
-
+  $cfg_global_host_event_handler      = unset
+  $cfg_global_service_event_handler   = unset
 
   # CGI PARAMS
   $cgi_authorized_for_system_information          = 'nagiosadmin'

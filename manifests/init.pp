@@ -17,6 +17,8 @@ class nagios (
   $cfg_command_check_interval                   = $nagios::params::cfg_command_check_interval,
   $cfg_use_retained_scheduling_info             = $nagios::params::cfg_use_retained_scheduling_info,
   $cfg_enable_flap_detection                    = $nagios::params::cfg_enable_flap_detection,
+  $cfg_global_host_event_handler                = $nagios::params::cfg_global_host_event_handler,
+  $cfg_global_service_event_handler             = $nagios::params::cfg_global_service_event_handler,
   $cgi_authorized_for_system_information        = $nagios::params::cgi_authorized_for_system_information,
   $cgi_authorized_for_configuration_information = $nagios::params::cgi_authorized_for_configuration_information,
   $cgi_authorized_for_system_commands           = $nagios::params::cgi_authorized_for_system_commands,
@@ -60,6 +62,8 @@ class nagios (
     command_check_interval       => $cfg_command_check_interval,
     use_retained_scheduling_info => $cfg_use_retained_scheduling_info,
     enable_flap_detection        => $cfg_enable_flap_detection,
+    global_host_event_handler    => $cfg_global_host_event_handler,
+    global_service_event_handler => $cfg_global_service_event_handler,
     require                      => Class['nagios::packages'],
   }
 
