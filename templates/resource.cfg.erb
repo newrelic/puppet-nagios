@@ -22,7 +22,7 @@
 #
 ###########################################################################
 
-<% @resource_user.keys.each do |k| -%>
+<% @resource_user.keys.sort.each do |k| -%>
 $<%= k.upcase %>$=<%= @resource_user[k] %>
 <% end -%>
 
