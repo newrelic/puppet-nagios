@@ -23,6 +23,7 @@ describe 'nagios::nagios_cfg' do
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^command_check_interval=-1$/)
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^use_retained_scheduling_info=1$/)
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^enable_flap_detection=0$/)
+      should contain_file('/etc/nagios/nagios.cfg').with_content(/^enable_notifications=1$/)
     end
   end
 
@@ -36,6 +37,7 @@ describe 'nagios::nagios_cfg' do
         'command_check_interval'       => '300',
         'use_retained_scheduling_info' => '0',
         'enable_flap_detection'        => '1',
+        'enable_notifications'         => '0',
       }
     }
 
@@ -45,6 +47,7 @@ describe 'nagios::nagios_cfg' do
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^command_check_interval=300$/)
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^use_retained_scheduling_info=0$/)
       should contain_file('/etc/nagios/nagios.cfg').with_content(/^enable_flap_detection=1$/)
+      should contain_file('/etc/nagios/nagios.cfg').with_content(/^enable_notifications=0$/)
     end
   end
 end
