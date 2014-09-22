@@ -39,12 +39,12 @@ class nagios (
 ) inherits nagios::params {
 
   class { 'nagios::packages':
-    packages_core    => $nagios::params::packages_core,
-    packages_plugins => $nagios::params::packages_plugins,
-    dependencies     => $nagios::params::package_dependencies,
-    link_lib64       => $nagios::params::link_lib64,
-    purge_objects    => $nagios::params::purge_default_objects,
-    base_dir         => $nagios::params::base_dir,
+    packages_core    => $packages_core,
+    packages_plugins => $packages_plugins,
+    dependencies     => $dependencies,
+    link_lib64       => $link_lib64,
+    purge_objects    => $purge_objects,
+    base_dir         => $base_dir,
   }
 
   class { 'nagios::cgi_cfg':
